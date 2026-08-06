@@ -73,3 +73,11 @@ export default defineConfig([
 ])
 
 ```
+
+
+day 2
+Primary       → #4F46E5   (Purple)
+Background    → #F8FAFC   (Light Gray)
+Text          → #111827   (Almost Black)
+Card          → White
+Button Text   → White

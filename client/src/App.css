@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+a{
+   text-align: center; 
+}
+
+h2{
+    text-align: left;
+}
+
+button{
+    text-decoration: aqua;
+    text-decoration: wavy;
+}
