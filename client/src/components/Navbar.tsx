@@ -1,17 +1,23 @@
+import {  Link} from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
     return(
         <nav>
+            
             <h2>EchoBridge</h2>
 
             <div>
-            <a href='/'> Home </a>
-            <a href='/'> Features</a>
-            <a href='/'>About</a>
-            <a href='/'>Contact</a>
+              <Link to='/'>Home </Link>
+              <Link to='/#feature'>Features</Link>
+              <Link to='/about'>About</Link>
+              <Link to='/contact'>Contact</Link>
             </div>
-            <button>Start Meeting</button>
+
+            <Link to="/meeting" className="start-meeting-button">
+              Start Meeting
+            </Link>
+            
         </nav>
     );
 }

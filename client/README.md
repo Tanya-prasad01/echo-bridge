@@ -75,6 +75,26 @@ export default defineConfig([
 ```
 
 
+day 1
+# EchoBridge 🌉
+
+AI-powered multilingual meeting platform.
+
+## Vision
+
+Enable people speaking different languages to communicate naturally through real-time AI translation, live captions, and meeting summaries.
+
+## Tech Stack
+
+- React
+- TypeScript
+- Node.js
+- Express
+- PostgreSQL
+- LangChain
+- Gemini API
+- AWS
+
 day 2
 Primary       → #4F46E5   (Purple)
 Background    → #F8FAFC   (Light Gray)

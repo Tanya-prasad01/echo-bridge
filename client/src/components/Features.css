@@ -1,21 +1,17 @@
 .features{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
     text-align: center;
     
-    gap: 40px;
-    padding: 60px 50px;
-    min-height: 60vh;
+    gap: 30px;
+    padding: 40px 40px;
 }
 .features-container{
     display: flex;
     justify-content: center;
-    align-items: center;
 
-    padding:  0px;
     gap: 30px;
 }
  
@@ -35,7 +31,6 @@
     border-radius: 12px;
 
     padding: 30px;
-
     gap: 15px;
 
     width: 320px;
@@ -46,13 +41,23 @@
     transform: translateY(-8px);
 }
 
-/* .feature-card span{
-    height: ;
-} */
+ .feature-card span{
+    font-size: 45px;
+} 
 
+.feature-card h3{
+    font-size: 20px;
+}
 
+.feature-card p{
+    color: #d1d5db;
+    line-height: 1.6;
+}
 .feature-card a{
-    color: #070336;
+    color: #6366f1;
+    font-weight: 600;
+    margin-left: 0;
+    cursor: pointer;
 }
 
 .feature-card a:hover{

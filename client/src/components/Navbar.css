@@ -1,9 +1,15 @@
 nav{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     padding: 20px 50px;
     background-color: #413e67;
+
 }
 
 nav div{
@@ -27,7 +33,7 @@ a:hover{
     color: #7b73cf;
 }
 
-button{
+.start-meeting-button{
     background-color: #4f46e5;
     color: white;
     border: none;
@@ -37,6 +43,7 @@ button{
 }
 
 
-button:hover{
+.start-meeting-button:hover{
     background-color: #070336;
 }
+
