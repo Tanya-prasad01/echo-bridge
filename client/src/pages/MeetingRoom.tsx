@@ -1042,6 +1042,7 @@ const MeetingRoom = () => {
   const [micOn, setMicOn] = useState(true);
   const [permissionError, setPermissionError] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [showParticipants, setShowParticipants] = useState(false);
 
   const meetingId = "784 512 963";
 
@@ -1365,6 +1366,41 @@ const MeetingRoom = () => {
 
       </section>
 
+      {showParticipants && (
+  <div className="participants-panel">
+
+    <button
+      className="close-participants"
+      onClick={() => setShowParticipants(false)}
+    >
+      ×
+    </button>
+
+    <h3>Participants</h3>
+
+    <div className="participant-item">
+
+      <div className="participant-avatar">
+        👤
+      </div>
+
+      <div className="participant-info">
+        <strong>You</strong>
+
+        <span>
+          {cameraOn ? "Camera on" : "Camera off"} •{" "}
+          {micOn ? "Mic on" : "Mic off"}
+        </span>
+      </div>
+
+    </div>
+
+    <div className="no-participants">
+      No other participants yet
+    </div>
+
+  </div>
+)}
 
       {/* ================= CONTROLS ================= */}
 
@@ -1453,16 +1489,13 @@ const MeetingRoom = () => {
 
         {/* PARTICIPANTS */}
 
-        <button className="control-btn">
-
+        <button className="control-btn" onClick={() => setShowParticipants(!showParticipants)}>         
           <span className="control-icon">
             👥
-          </span>
-
-          <span>
-            Participants
-          </span>
-
+            </span>
+            <span>
+              Participants
+              </span>
         </button>
 
 
