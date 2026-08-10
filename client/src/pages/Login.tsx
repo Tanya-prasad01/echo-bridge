@@ -26,6 +26,7 @@ const Login = () => {
       alert(`Welcome ${user.name}!`);
 
       navigate("/");
+      window.location.reload();
     } else {
       alert("Invalid email or password.");
     }

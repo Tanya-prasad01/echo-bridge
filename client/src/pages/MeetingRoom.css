@@ -1,13 +1,4 @@
-.meeting-room {
-  min-height: 100vh;
-  background: #111827;
-  color: white;
-}
-
-
-/* Header */
-
-.meeting-header {
+/* .meeting-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,9 +28,6 @@
   cursor: pointer;
 }
 
-
-/* Main container */
-
 .meeting-container {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
@@ -48,9 +36,6 @@
   padding: 40px;
 }
 
-
-/* Common cards */
-
 .meeting-details,
 .camera-preview,
 .meeting-settings {
@@ -58,9 +43,6 @@
   padding: 25px;
   border-radius: 12px;
 }
-
-
-/* Meeting details */
 
 .meeting-details h3 {
   color: #6366f1;
@@ -71,9 +53,6 @@
   margin-top: 25px;
   margin-bottom: 5px;
 }
-
-
-/* Camera */
 
 .camera-preview {
   text-align: center;
@@ -104,8 +83,6 @@
 }
 
 
-/* Buttons */
-
 .meeting-buttons {
   display: flex;
   justify-content: center;
@@ -125,8 +102,6 @@
   cursor: pointer;
 }
 
-
-/* Settings */
 
 .meeting-settings {
   display: flex;
@@ -152,4 +127,581 @@
   padding: 11px;
 
   border-radius: 6px;
+}
+
+.live-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.camera-off {
+  width: 100%;
+  height: 100%;
+  background: #111827;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.participant-name {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.video-card {
+  position: relative;
+  overflow: hidden;
+} */
+
+
+
+/* =========================
+   MAIN MEETING ROOM
+========================= */
+/* 
+.meeting-room {
+  width: 100%;
+  height: 100vh;
+  background: #111827;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+
+
+
+
+.meeting-room {
+  width: 100%;
+  height: 100vh;
+  background: #111827;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+
+
+/* =========================
+   MAIN MEETING ROOM
+========================= */
+
+.meeting-room {
+  width: 100%;
+  height: 100vh;
+  background: #111827;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.meeting-header {
+  height: 70px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 32px;
+
+  background: #1f2937;
+  border-bottom: 1px solid #374151;
+  box-sizing: border-box;
+}
+
+.meeting-logo {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.meeting-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.meeting-id {
+  color: #e5e7eb;
+  font-size: 15px;
+}
+
+.meeting-id strong {
+  margin-left: 6px;
+  color: white;
+}
+
+.copy-btn {
+  background: #374151;
+  color: white;
+
+  border: none;
+  border-radius: 7px;
+
+  padding: 9px 14px;
+
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.copy-btn:hover {
+  background: #4b5563;
+}
+
+.leave-btn {
+  background: #dc2626;
+  color: white;
+
+  border: none;
+  border-radius: 7px;
+
+  padding: 10px 18px;
+
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.leave-btn:hover {
+  background: #b91c1c;
+}
+
+/* =========================
+   PERMISSION ERROR
+========================= */
+
+.permission-box {
+  position: absolute;
+
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 420px;
+
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 10px;
+
+  padding: 18px;
+
+  text-align: center;
+
+  z-index: 20;
+}
+
+.permission-box h3 {
+  margin: 0 0 8px;
+}
+
+.permission-box p {
+  color: #d1d5db;
+  margin: 0 0 15px;
+}
+
+.retry-btn {
+  background: #4f46e5;
+  color: white;
+
+  border: none;
+  border-radius: 6px;
+
+  padding: 9px 16px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.meeting-content {
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 25px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: #111827;
+}
+
+/* =========================
+   YOUR VIDEO
+========================= */
+
+.video-card {
+  position: relative;
+
+  width: 65%;
+  max-width: 1000px;
+
+  height: 100%;
+
+  min-height: 350px;
+
+  background: #1f2937;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.live-video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.video-hidden {
+  display: none;
+}
+
+.camera-off {
+  width: 100%;
+  height: 100%;
+
+  background: #1f2937;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+}
+
+.user-icon {
+  width: 80px;
+  height: 80px;
+
+  border-radius: 50%;
+
+  background: #374151;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 40px;
+}
+
+.camera-off p {
+  margin-top: 15px;
+
+  color: #d1d5db;
+  font-size: 16px;
+}
+
+.participant-name {
+  position: absolute;
+
+  left: 12px;
+  bottom: 12px;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  color: white;
+
+  padding: 6px 10px;
+
+  border-radius: 6px;
+
+  font-size: 13px;
+
+  z-index: 5;
+}
+
+/* =========================
+   WAITING CARD
+========================= */
+
+.waiting-card {
+  width: 300px;
+
+  min-height: 220px;
+
+  background: #1f2937;
+
+  border-radius: 12px;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.waiting-icon {
+  font-size: 40px;
+
+  margin-bottom: 10px;
+}
+
+.waiting-card h3 {
+  margin: 5px 0 10px;
+
+  font-size: 20px;
+}
+
+.waiting-card p {
+  color: #9ca3af;
+
+  line-height: 1.5;
+
+  margin: 0 0 20px;
+}
+
+.copy-meeting-btn {
+  background: #4f46e5;
+  color: white;
+
+  border: none;
+  border-radius: 7px;
+
+  padding: 10px 16px;
+
+  cursor: pointer;
+}
+
+.copy-meeting-btn:hover {
+  background: #4338ca;
+}
+
+/* =========================
+   BOTTOM CONTROLS
+========================= */
+
+.meeting-controls {
+  height: 90px;
+  flex-shrink: 0;
+
+  background: #1f2937;
+
+  border-top: 1px solid #374151;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 10px 20px;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   CONTROL BUTTONS
+========================= */
+
+.control-btn {
+  width: 82px;
+  height: 62px;
+
+  background: #374151;
+  color: white;
+
+  border: none;
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  font-size: 12px;
+
+  transition: 0.2s;
+}
+
+.control-btn:hover {
+  background: #4b5563;
+}
+
+.control-icon {
+  font-size: 21px;
+  line-height: 1;
+}
+
+.control-btn.off {
+  background: #7f1d1d;
+}
+
+.control-btn.off:hover {
+  background: #991b1b;
+}
+
+/* =========================
+   END CALL
+========================= */
+
+.meeting-controls .end-call {
+  width: 70px;
+  height: 70px;
+  min-width: 70px;
+
+  background: #0b0b0b;
+  color: white;
+
+  border: none;
+  border-radius: 50%;
+
+  margin-left: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 26px;
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  transition: 0.2s;
+}
+
+.meeting-controls .end-call:hover {
+  background: #afabab;
+  transform: scale(1.05);
+}
+
+.meeting-controls .end-call:active {
+  transform: scale(0.95);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .meeting-content {
+    gap: 12px;
+  }
+
+  .video-card {
+    width: 60%;
+  }
+
+  .waiting-card {
+    width: 260px;
+  }
+
+  .meeting-controls {
+    gap: 6px;
+  }
+
+  .control-btn {
+    width: 70px;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .meeting-header {
+    padding: 0 15px;
+  }
+
+  .meeting-logo {
+    font-size: 20px;
+  }
+
+  .meeting-id {
+    display: none;
+  }
+
+  .meeting-content {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .video-card {
+    width: 100%;
+    height: 55vh;
+  }
+
+  .waiting-card {
+    width: 100%;
+    min-height: 160px;
+  }
+
+  .meeting-controls {
+    height: auto;
+    min-height: 80px;
+
+    gap: 5px;
+
+    overflow-x: auto;
+  }
+
+  .control-btn {
+    flex-shrink: 0;
+
+    width: 65px;
+    height: 58px;
+  }
+
+  .control-btn span:last-child {
+    font-size: 10px;
+  }
+
+  .end-call {
+    flex-shrink: 0;
+
+    width: 55px;
+    height: 55px;
+  }
 }
