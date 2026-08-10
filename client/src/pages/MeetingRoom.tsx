@@ -1026,43 +1026,127 @@
 
 // export default MeetingRoom;
 
-
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MeetingRoom.css";
 
-const MeetingRoom = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const screenStreamRef = useRef<MediaStream | null>(null);
+/* =========================
+   SPEECH RECOGNITION TYPES
+========================= */
 
+interface SpeechResultEvent {
+  resultIndex: number;
+  results: {
+    [index: number]: {
+      [index: number]: {
+        transcript: string;
+      };
+      isFinal: boolean;
+    };
+    length: number;
+  };
+}
+
+interface SpeechRecognitionInstance {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+
+  start: () => void;
+  stop: () => void;
+
+  onresult:
+    | ((event: SpeechResultEvent) => void)
+    | null;
+
+  onend: (() => void) | null;
+
+  onerror:
+    | ((event: unknown) => void)
+    | null;
+}
+
+interface SpeechRecognitionConstructor {
+  new (): SpeechRecognitionInstance;
+}
+
+interface SpeechRecognitionWindow extends Window {
+  SpeechRecognition?: SpeechRecognitionConstructor;
+  webkitSpeechRecognition?: SpeechRecognitionConstructor;
+}
+
+/* =========================
+   COMPONENT
+========================= */
+
+const MeetingRoom = () => {
   const navigate = useNavigate();
 
+  /* =========================
+     VIDEO REFS
+  ========================= */
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const cameraStreamRef = useRef<MediaStream | null>(null);
+
+  const screenStreamRef = useRef<MediaStream | null>(null);
+
+  /* =========================
+     SPEECH RECOGNITION REF
+  ========================= */
+
+  const recognitionRef =
+    useRef<SpeechRecognitionInstance | null>(null);
+
+  /* =========================
+     STATES
+  ========================= */
+
   const [cameraOn, setCameraOn] = useState(true);
+
   const [micOn, setMicOn] = useState(true);
-  const [permissionError, setPermissionError] = useState(false);
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const [showParticipants, setShowParticipants] = useState(false);
+
+  const [permissionError, setPermissionError] =
+    useState(false);
+
+  const [isScreenSharing, setIsScreenSharing] =
+    useState(false);
+
+  const [showParticipants, setShowParticipants] =
+    useState(false);
+
+  const [captionsOn, setCaptionsOn] =
+    useState(false);
+
+  const [captionText, setCaptionText] =
+    useState("");
+
+  /* =========================
+     MEETING ID
+  ========================= */
 
   const meetingId = "784 512 963";
 
-  // =========================
-  // START CAMERA + MIC
-  // =========================
+  /* =========================
+     START CAMERA + MIC
+  ========================= */
 
   const startMedia = async () => {
     try {
-      // Stop old stream if any
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
+      if (cameraStreamRef.current) {
+        cameraStreamRef.current
+          .getTracks()
+          .forEach((track) => track.stop());
       }
 
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
+      const stream =
+        await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
 
-      streamRef.current = stream;
+      cameraStreamRef.current = stream;
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -1080,34 +1164,83 @@ const MeetingRoom = () => {
     }
   };
 
-  // =========================
-  // INITIAL MEDIA
-  // =========================
+  /* =========================
+     INITIAL CAMERA
+  ========================= */
 
- useEffect(() => {
-  const timer = setTimeout(() => {
-    startMedia();
-  }, 0);
+  useEffect(() => {
+    let mounted = true;
 
-  return () => {
-    clearTimeout(timer);
+    const initializeMedia = async () => {
+      try {
+        const stream =
+          await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          });
 
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
-    }
-  };
-}, []);
+        if (!mounted) {
+          stream
+            .getTracks()
+            .forEach((track) => track.stop());
 
-  // =========================
-  // CAMERA
-  // =========================
+          return;
+        }
+
+        cameraStreamRef.current = stream;
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+
+        setCameraOn(true);
+        setMicOn(true);
+        setPermissionError(false);
+      } catch (error) {
+        console.log("Permission error:", error);
+
+        if (mounted) {
+          setCameraOn(false);
+          setMicOn(false);
+          setPermissionError(true);
+        }
+      }
+    };
+
+    initializeMedia();
+
+    return () => {
+      mounted = false;
+
+      if (cameraStreamRef.current) {
+        cameraStreamRef.current
+          .getTracks()
+          .forEach((track) => track.stop());
+      }
+
+      if (screenStreamRef.current) {
+        screenStreamRef.current
+          .getTracks()
+          .forEach((track) => track.stop());
+      }
+
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
+
+  /* =========================
+     CAMERA
+  ========================= */
 
   const toggleCamera = () => {
-    const stream = streamRef.current;
+    const stream = cameraStreamRef.current;
 
     if (!stream) return;
 
-    const videoTrack = stream.getVideoTracks()[0];
+    const videoTrack =
+      stream.getVideoTracks()[0];
 
     if (!videoTrack) return;
 
@@ -1116,16 +1249,17 @@ const MeetingRoom = () => {
     setCameraOn(videoTrack.enabled);
   };
 
-  // =========================
-  // MICROPHONE
-  // =========================
+  /* =========================
+     MICROPHONE
+  ========================= */
 
   const toggleMic = () => {
-    const stream = streamRef.current;
+    const stream = cameraStreamRef.current;
 
     if (!stream) return;
 
-    const audioTrack = stream.getAudioTracks()[0];
+    const audioTrack =
+      stream.getAudioTracks()[0];
 
     if (!audioTrack) return;
 
@@ -1134,104 +1268,236 @@ const MeetingRoom = () => {
     setMicOn(audioTrack.enabled);
   };
 
-  // =========================
-  // Share -screen
-  // =========================
-
-  const toggleScreenShare = async () => {
-  try {
-    // STOP SCREEN SHARING
-    if (isScreenSharing) {
-      if (screenStreamRef.current) {
-        screenStreamRef.current.getTracks().forEach((track) => {
-          track.stop();
-        });
-
-        screenStreamRef.current = null;
-      }
-
-      setIsScreenSharing(false);
-
-      // Camera wapas show karo
-      if (videoRef.current && streamRef.current) {
-        videoRef.current.srcObject = streamRef.current;
-        await videoRef.current.play();
-      }
-
-      return;
-    }
-
-    // START SCREEN SHARING
-    const screenStream =
-      await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: true,
-      });
-
-    screenStreamRef.current = screenStream;
-
-    // Screen ko video element mein lagao
-    if (videoRef.current) {
-      videoRef.current.srcObject = screenStream;
-
-      // IMPORTANT
-      await videoRef.current.play();
-    }
-
-    setIsScreenSharing(true);
-
-    // Browser ka "Stop sharing" dabane par
-    // camera automatically wapas lao
-    const screenTrack = screenStream.getVideoTracks()[0];
-
-    screenTrack.onended = async () => {
-      screenStreamRef.current = null;
-      setIsScreenSharing(false);
-
-      if (videoRef.current && streamRef.current) {
-        videoRef.current.srcObject = streamRef.current;
-        await videoRef.current.play();
-      }
-    };
-
-  } catch (error) {
-    console.log("Screen sharing cancelled:", error);
-    setIsScreenSharing(false);
-  }
-};
-
-  // =========================
-  // COPY MEETING ID
-  // =========================
+  /* =========================
+     COPY MEETING ID
+  ========================= */
 
   const copyMeetingId = async () => {
     try {
       await navigator.clipboard.writeText(meetingId);
+
       alert("Meeting ID copied!");
     } catch (error) {
       console.log("Copy failed:", error);
     }
   };
 
-  // =========================
-  // LEAVE MEETING
-  // =========================
+  /* =========================
+     SCREEN SHARE
+  ========================= */
+
+  const toggleScreenShare = async () => {
+    if (isScreenSharing) {
+      stopScreenSharing();
+      return;
+    }
+
+    try {
+      const screenStream =
+        await navigator.mediaDevices.getDisplayMedia({
+          video: true,
+          audio: false,
+        });
+
+      screenStreamRef.current = screenStream;
+
+      if (videoRef.current) {
+        videoRef.current.srcObject =
+          screenStream;
+      }
+
+      setIsScreenSharing(true);
+
+      const screenTrack =
+        screenStream.getVideoTracks()[0];
+
+      if (screenTrack) {
+        screenTrack.onended = () => {
+          stopScreenSharing();
+        };
+      }
+    } catch (error) {
+      console.log(
+        "Screen sharing cancelled:",
+        error
+      );
+    }
+  };
+
+  /* =========================
+     STOP SCREEN SHARE
+  ========================= */
+
+  const stopScreenSharing = () => {
+    if (screenStreamRef.current) {
+      screenStreamRef.current
+        .getTracks()
+        .forEach((track) => track.stop());
+
+      screenStreamRef.current = null;
+    }
+
+    if (videoRef.current) {
+      videoRef.current.srcObject =
+        cameraStreamRef.current;
+    }
+
+    setIsScreenSharing(false);
+  };
+
+  /* =========================
+     PARTICIPANTS
+  ========================= */
+
+  const toggleParticipants = () => {
+    setShowParticipants(
+      (previousValue) => !previousValue
+    );
+  };
+
+  /* =========================
+     CAPTIONS
+  ========================= */
+
+  const startCaptions = () => {
+    const speechWindow =
+      window as SpeechRecognitionWindow;
+
+    const SpeechRecognition =
+      speechWindow.SpeechRecognition ||
+      speechWindow.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert(
+        "Speech recognition is not supported in this browser."
+      );
+
+      return;
+    }
+
+    const recognition =
+      new SpeechRecognition();
+
+    recognition.continuous = true;
+
+    recognition.interimResults = true;
+
+    recognition.lang = "en-US";
+
+    recognition.onresult = (
+      event: SpeechResultEvent
+    ) => {
+      let text = "";
+
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
+        text +=
+          event.results[i][0].transcript;
+      }
+
+      setCaptionText(text);
+    };
+
+    recognition.onend = () => {
+      if (captionsOn) {
+        try {
+          recognition.start();
+        } catch (error) {
+          console.log(
+            "Caption restart error:",
+            error
+          );
+        }
+      }
+    };
+
+    recognition.onerror = (error) => {
+      console.log(
+        "Speech recognition error:",
+        error
+      );
+    };
+
+    recognitionRef.current = recognition;
+
+    try {
+      recognition.start();
+
+      setCaptionsOn(true);
+    } catch (error) {
+      console.log(
+        "Caption start error:",
+        error
+      );
+    }
+  };
+
+  /* =========================
+     STOP CAPTIONS
+  ========================= */
+
+  const stopCaptions = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+
+      recognitionRef.current = null;
+    }
+
+    setCaptionsOn(false);
+
+    setCaptionText("");
+  };
+
+  /* =========================
+     TOGGLE CAPTIONS
+  ========================= */
+
+  const toggleCaptions = () => {
+    if (captionsOn) {
+      stopCaptions();
+    } else {
+      startCaptions();
+    }
+  };
+
+  /* =========================
+     RETRY PERMISSION
+  ========================= */
+
+  const retryPermission = () => {
+    startMedia();
+  };
+
+  /* =========================
+     LEAVE MEETING
+  ========================= */
 
   const leaveMeeting = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
+    if (cameraStreamRef.current) {
+      cameraStreamRef.current
+        .getTracks()
+        .forEach((track) => track.stop());
+    }
+
+    if (screenStreamRef.current) {
+      screenStreamRef.current
+        .getTracks()
+        .forEach((track) => track.stop());
+    }
+
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
     }
 
     navigate("/");
   };
 
-  // =========================
-  // TRY AGAIN
-  // =========================
-
-  const retryPermission = () => {
-    startMedia();
-  };
+  /* =========================
+     UI
+  ========================= */
 
   return (
     <main className="meeting-room">
@@ -1247,7 +1513,7 @@ const MeetingRoom = () => {
         <div className="meeting-info">
 
           <span className="meeting-id">
-            Meeting ID:
+            Meeting ID:{" "}
             <strong>{meetingId}</strong>
           </span>
 
@@ -1280,13 +1546,14 @@ const MeetingRoom = () => {
           </h3>
 
           <p>
-            Camera and microphone access is blocked.
-            Please allow access from your browser settings.
+            Camera and microphone access is
+            blocked. Please allow access from
+            your browser settings.
           </p>
 
           <button
-            onClick={retryPermission}
             className="retry-btn"
+            onClick={retryPermission}
           >
             Try Again
           </button>
@@ -1295,41 +1562,40 @@ const MeetingRoom = () => {
       )}
 
 
-      {/* ================= MAIN VIDEO AREA ================= */}
+      {/* ================= MAIN CONTENT ================= */}
 
       <section className="meeting-content">
 
-        {/* YOUR VIDEO */}
+        {/* ================= VIDEO ================= */}
 
         <div className="video-card">
-
-          {/* IMPORTANT:
-              Video is ALWAYS rendered.
-              We only hide it using CSS.
-          */}
 
           <video
             ref={videoRef}
             autoPlay
             playsInline
             muted
-            className={`live-video ${!cameraOn && !isScreenSharing ? "video-hidden" : ""
-            }`}
+            className={
+              cameraOn || isScreenSharing
+                ? "live-video"
+                : "live-video video-hidden"
+            }
           />
 
-          {!cameraOn && (
-            <div className="camera-off">
+          {!cameraOn &&
+            !isScreenSharing && (
+              <div className="camera-off">
 
-              <div className="user-icon">
-                👤
+                <div className="user-icon">
+                  👤
+                </div>
+
+                <p>
+                  Camera is off
+                </p>
+
               </div>
-
-              <p>
-                Camera is off
-              </p>
-
-            </div>
-          )}
+            )}
 
           <span className="participant-name">
             You
@@ -1338,7 +1604,7 @@ const MeetingRoom = () => {
         </div>
 
 
-        {/* WAITING CARD */}
+        {/* ================= WAITING CARD ================= */}
 
         <div className="waiting-card">
 
@@ -1364,43 +1630,78 @@ const MeetingRoom = () => {
 
         </div>
 
+
+        {/* ================= PARTICIPANTS ================= */}
+
+        {showParticipants && (
+          <div className="participants-panel">
+
+            <button
+              className="close-participants"
+              onClick={() =>
+                setShowParticipants(false)
+              }
+            >
+              ×
+            </button>
+
+            <h2>
+              Participants
+            </h2>
+
+            <div className="participant-item">
+
+              <div className="participant-avatar">
+                👤
+              </div>
+
+              <div className="participant-info">
+
+                <strong>
+                  You
+                </strong>
+
+                <span>
+                  {cameraOn
+                    ? "Camera on"
+                    : "Camera off"}{" "}
+                  •{" "}
+                  {micOn
+                    ? "Mic on"
+                    : "Mic off"}
+                </span>
+
+              </div>
+
+            </div>
+
+            <div className="no-participants">
+              No other participants yet
+            </div>
+
+          </div>
+        )}
+
       </section>
 
-      {showParticipants && (
-  <div className="participants-panel">
 
-    <button
-      className="close-participants"
-      onClick={() => setShowParticipants(false)}
-    >
-      ×
-    </button>
+      {/* ================= LIVE CAPTIONS ================= */}
 
-    <h3>Participants</h3>
+      {captionsOn && (
+        <div className="captions-box">
 
-    <div className="participant-item">
+          <div className="captions-title">
+            💬 Live Captions
+          </div>
 
-      <div className="participant-avatar">
-        👤
-      </div>
+          <div className="caption-text">
+            {captionText ||
+              "Listening..."}
+          </div>
 
-      <div className="participant-info">
-        <strong>You</strong>
+        </div>
+      )}
 
-        <span>
-          {cameraOn ? "Camera on" : "Camera off"} •{" "}
-          {micOn ? "Mic on" : "Mic off"}
-        </span>
-      </div>
-
-    </div>
-
-    <div className="no-participants">
-      No other participants yet
-    </div>
-
-  </div>
-)}
 
       {/* ================= CONTROLS ================= */}
 
@@ -1409,16 +1710,20 @@ const MeetingRoom = () => {
         {/* CAMERA */}
 
         <button
-          className={`control-btn ${!cameraOn ? "off" : ""}`}
+          className="control-btn"
           onClick={toggleCamera}
         >
 
           <span className="control-icon">
-            {cameraOn ? "📹" : "🚫"}
+            {cameraOn
+              ? "📹"
+              : "🚫"}
           </span>
 
           <span>
-            {cameraOn ? "Camera" : "Camera Off"}
+            {cameraOn
+              ? "Camera"
+              : "Camera Off"}
           </span>
 
         </button>
@@ -1427,16 +1732,20 @@ const MeetingRoom = () => {
         {/* MIC */}
 
         <button
-          className={`control-btn ${!micOn ? "off" : ""}`}
+          className="control-btn"
           onClick={toggleMic}
         >
 
           <span className="control-icon">
-            {micOn ? "🎤" : "🔇"}
+            {micOn
+              ? "🎤"
+              : "🔇"}
           </span>
 
           <span>
-            {micOn ? "Mic" : "Mic Off"}
+            {micOn
+              ? "Mic"
+              : "Mic Off"}
           </span>
 
         </button>
@@ -1444,14 +1753,23 @@ const MeetingRoom = () => {
 
         {/* CAPTIONS */}
 
-        <button className="control-btn">
+        <button
+          className={
+            captionsOn
+              ? "control-btn active"
+              : "control-btn"
+          }
+          onClick={toggleCaptions}
+        >
 
           <span className="control-icon">
             💬
           </span>
 
           <span>
-            Captions
+            {captionsOn
+              ? "Captions On"
+              : "Captions"}
           </span>
 
         </button>
@@ -1474,14 +1792,23 @@ const MeetingRoom = () => {
 
         {/* SHARE SCREEN */}
 
-        <button className={`control-btn ${isScreenSharing ? "off" : ""}`} onClick={toggleScreenShare}>
+        <button
+          className={
+            isScreenSharing
+              ? "control-btn sharing"
+              : "control-btn"
+          }
+          onClick={toggleScreenShare}
+        >
 
           <span className="control-icon">
             🖥️
           </span>
 
           <span>
-            {isScreenSharing ? "Stop Sharing" : "Share Screen"}
+            {isScreenSharing
+              ? "Stop Sharing"
+              : "Share Screen"}
           </span>
 
         </button>
@@ -1489,13 +1816,19 @@ const MeetingRoom = () => {
 
         {/* PARTICIPANTS */}
 
-        <button className="control-btn" onClick={() => setShowParticipants(!showParticipants)}>         
+        <button
+          className="control-btn"
+          onClick={toggleParticipants}
+        >
+
           <span className="control-icon">
             👥
-            </span>
-            <span>
-              Participants
-              </span>
+          </span>
+
+          <span>
+            Participants
+          </span>
+
         </button>
 
 
@@ -1514,7 +1847,7 @@ const MeetingRoom = () => {
         </button>
 
 
-        {/* DISCONNECT */}
+        {/* END CALL */}
 
         <button
           className="end-call"

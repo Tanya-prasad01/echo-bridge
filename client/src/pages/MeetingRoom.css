@@ -798,3 +798,40 @@
   color: #9ca3af;
   font-size: 13px;
 }
+
+
+.captions-box {
+  position: absolute;
+  left: 50%;
+  bottom: 105px;
+  transform: translateX(-50%);
+
+  width: min(700px, 80%);
+
+  background: rgba(17, 24, 39, 0.95);
+  border: 1px solid #374151;
+  border-radius: 12px;
+
+  padding: 14px 20px;
+
+  z-index: 20;
+  text-align: center;
+}
+
+.captions-label {
+  color: #a5b4fc;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.caption-text {
+  color: white;
+  font-size: 17px;
+  line-height: 1.5;
+  min-height: 25px;
+}
+
+.meeting-controls .control-btn.active {
+  background: #4f46e5;
+}
