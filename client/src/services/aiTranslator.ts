@@ -1,8 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(
-  import.meta.env.VITE_GEMINI_API_KEY
-);
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+const genAI = new GoogleGenerativeAI(API_KEY);
 
 export async function translateText(
   text: string,
@@ -13,11 +13,11 @@ export async function translateText(
   }
 
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: "gemini-3.5-flash",
   });
 
   const prompt = `Translate the following text into ${targetLanguage}.
-Return only the translated text. Do not add explanations.
+Return only the translated text, nothing else.
 
 Text:
 ${text}`;
