@@ -1,4 +1,4 @@
-/* .meeting-header {
+/* /* .meeting-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -197,15 +197,8 @@
   box-sizing: border-box;
 }
 
-/* =========================
-   HEADER
-========================= */
 
 
-
-/* =========================
-   MAIN MEETING ROOM
-========================= */
 
 .meeting-room {
   width: 100%;
@@ -220,9 +213,6 @@
   box-sizing: border-box;
 }
 
-/* =========================
-   HEADER
-========================= */
 
 .meeting-header {
   height: 70px;
@@ -295,9 +285,6 @@
   background: #b91c1c;
 }
 
-/* =========================
-   PERMISSION ERROR
-========================= */
 
 .permission-box {
   position: absolute;
@@ -340,9 +327,7 @@
   cursor: pointer;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
+
 
 .meeting-content {
   flex: 1;
@@ -361,9 +346,6 @@
   background: #111827;
 }
 
-/* =========================
-   YOUR VIDEO
-========================= */
 
 .video-card {
   position: relative;
@@ -451,9 +433,7 @@
   z-index: 5;
 }
 
-/* =========================
-   WAITING CARD
-========================= */
+
 
 .waiting-card {
   width: 300px;
@@ -513,9 +493,7 @@
   background: #4338ca;
 }
 
-/* =========================
-   BOTTOM CONTROLS
-========================= */
+
 
 .meeting-controls {
   height: 90px;
@@ -538,9 +516,7 @@
   box-sizing: border-box;
 }
 
-/* =========================
-   CONTROL BUTTONS
-========================= */
+
 
 .control-btn {
   width: 82px;
@@ -584,9 +560,7 @@
   background: #991b1b;
 }
 
-/* =========================
-   END CALL
-========================= */
+
 
 .meeting-controls .end-call {
   width: 70px;
@@ -622,9 +596,7 @@
   transform: scale(0.95);
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+
 
 @media (max-width: 900px) {
 
@@ -834,4 +806,633 @@
 
 .meeting-controls .control-btn.active {
   background: #4f46e5;
+} */
+
+
+
+
+/* ================================
+   MEETING ROOM
+================================ */
+
+.meeting-room {
+  width: 100%;
+  height: 100vh;
+  background: #0f172a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.meeting-header {
+  height: 72px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 32px;
+
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+
+  box-sizing: border-box;
+}
+
+.meeting-logo {
+  color: white;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.meeting-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.meeting-id {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.meeting-id strong {
+  color: white;
+  margin-left: 5px;
+}
+
+.copy-button {
+  background: #334155;
+  color: white;
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 16px;
+
+  font-size: 14px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.copy-button:hover {
+  background: #475569;
+}
+
+.leave-button {
+  background: #dc3b30;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 18px;
+
+  font-size: 14px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.leave-button:hover {
+  background: #b91c1c;
+}
+
+/* ================================
+   MAIN AREA
+================================ */
+
+.meeting-main {
+  flex: 1;
+  min-height: 0;
+
+  position: relative;
+
+  display: flex;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+/* ================================
+   VIDEO SECTION
+================================ */
+
+.video-section {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-right: 20px;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+
+  max-height: calc(100vh - 190px);
+
+  background: #020617;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  border: 1px solid #1e293b;
+}
+
+/* Actual camera video */
+
+.camera-video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+/* Camera OFF */
+
+.camera-off {
+  width: 100%;
+  height: 100%;
+
+  background: #111827;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+}
+
+.camera-off-icon {
+  width: 80px;
+  height: 80px;
+
+  border-radius: 50%;
+
+  background: #334155;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 36px;
+
+  margin-bottom: 15px;
+}
+
+.camera-off p {
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+/* ================================
+   PARTICIPANTS PANEL
+================================ */
+
+.participants-panel {
+  position: absolute;
+
+  top: 20px;
+  right: 20px;
+
+  width: 320px;
+
+  background: #1e293b;
+
+  border: 1px solid #334155;
+
+  border-radius: 16px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  z-index: 50;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.participants-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.participants-header h3 {
+  margin: 0;
+
+  font-size: 20px;
+}
+
+.close-participants {
+  width: 30px;
+  height: 30px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #cbd5e1;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+.close-participants:hover {
+  background: #334155;
+  color: white;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px;
+
+  background: #334155;
+
+  border-radius: 12px;
+}
+
+.participant-avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #475569;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+}
+
+.participant-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.participant-info strong {
+  font-size: 15px;
+}
+
+.participant-info span {
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.no-participants {
+  text-align: center;
+
+  margin: 18px 0 4px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+/* ================================
+   LIVE CAPTIONS
+================================ */
+
+.captions-box {
+  position: fixed;
+
+  left: 50%;
+  bottom: 115px;
+
+  transform: translateX(-50%);
+
+  width: min(650px, 60%);
+
+  background: rgba(15, 23, 42, 0.95);
+
+  border: 1px solid #334155;
+
+  border-radius: 14px;
+
+  padding: 14px 20px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  z-index: 30;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.captions-label {
+  color: #cbd5e1;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  margin-bottom: 6px;
+}
+
+.caption-text {
+  color: white;
+
+  font-size: 17px;
+
+  line-height: 1.5;
+
+  min-height: 25px;
+}
+
+/* ================================
+   BOTTOM CONTROLS
+================================ */
+
+.meeting-controls {
+  position: fixed;
+
+  left: 50%;
+  bottom: 20px;
+
+  transform: translateX(-50%);
+
+  height: 78px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 8px 14px;
+
+  background: rgba(30, 41, 59, 0.98);
+
+  border: 1px solid #334155;
+
+  border-radius: 16px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+
+  z-index: 100;
+
+  box-sizing: border-box;
+}
+
+/* ================================
+   CONTROL BUTTONS
+================================ */
+
+.control-btn {
+  width: 82px;
+  height: 62px;
+
+  background: #334155;
+
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  font-size: 12px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.control-btn:hover {
+  background: #475569;
+
+  transform: translateY(-2px);
+}
+
+.control-btn:active {
+  transform: scale(0.96);
+}
+
+.control-btn.active {
+  background: #3b6ff5;
+}
+
+.control-btn.active:hover {
+  background: #315fd9;
+}
+
+.control-btn.off {
+  background: #991b1b;
+}
+
+.control-btn.off:hover {
+  background: #b91c1c;
+}
+
+.control-icon {
+  font-size: 21px;
+  line-height: 1;
+}
+
+/* ================================
+   END CALL
+================================ */
+
+.meeting-controls .end-call {
+  width: 62px;
+  height: 62px;
+
+  min-width: 62px;
+
+  margin-left: 8px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #dc3b30;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 23px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.meeting-controls .end-call:hover {
+  background: #b91c1c;
+
+  transform: scale(1.05);
+}
+
+.meeting-controls .end-call:active {
+  transform: scale(0.95);
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1100px) {
+  .meeting-header {
+    padding: 0 22px;
+  }
+
+  .meeting-id {
+    display: none;
+  }
+
+  .participants-panel {
+    width: 290px;
+  }
+
+  .control-btn {
+    width: 74px;
+  }
+}
+
+@media (max-width: 800px) {
+  .meeting-header {
+    height: 65px;
+    padding: 0 16px;
+  }
+
+  .meeting-logo {
+    font-size: 21px;
+  }
+
+  .meeting-header-right {
+    gap: 8px;
+  }
+
+  .copy-button,
+  .leave-button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .meeting-main {
+    padding: 12px;
+  }
+
+  .video-section {
+    padding-right: 0;
+  }
+
+  .participants-panel {
+    top: 12px;
+    right: 12px;
+
+    width: 280px;
+  }
+
+  .meeting-controls {
+    max-width: calc(100vw - 20px);
+
+    overflow-x: auto;
+
+    justify-content: flex-start;
+
+    bottom: 10px;
+  }
+
+  .control-btn {
+    flex-shrink: 0;
+
+    width: 70px;
+    height: 58px;
+  }
+
+  .meeting-controls .end-call {
+    flex-shrink: 0;
+  }
+
+  .captions-box {
+    bottom: 100px;
+
+    width: 80%;
+  }
+}
+
+@media (max-width: 600px) {
+  .meeting-controls {
+    gap: 6px;
+    padding: 7px;
+  }
+
+  .control-btn {
+    width: 62px;
+    height: 54px;
+  }
+
+  .control-icon {
+    font-size: 18px;
+  }
+
+  .control-btn span:last-child {
+    font-size: 10px;
+  }
+
+  .meeting-controls .end-call {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+
+    margin-left: 3px;
+  }
+
+  .participants-panel {
+    width: calc(100vw - 24px);
+    right: 12px;
+  }
 }

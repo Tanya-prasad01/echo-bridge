@@ -1,0 +1,113 @@
+.translation-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 105px;
+  width: 390px;
+  max-height: 75vh;
+  overflow-y: auto;
+  background: #1f2937;
+  color: white;
+  border: 1px solid #374151;
+  border-radius: 16px;
+  padding: 20px;
+  z-index: 100;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.translation-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.translation-header h3 {
+  margin: 0 0 5px;
+}
+
+.translation-status {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.close-translation {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.language-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.language-section label {
+  color: #d1d5db;
+  font-size: 14px;
+}
+
+.translation-panel select,
+.translation-panel textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #111827;
+  color: white;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 14px;
+}
+
+.translation-panel textarea {
+  min-height: 100px;
+  resize: vertical;
+  margin-bottom: 15px;
+}
+
+.translation-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.translation-controls select {
+  flex: 1;
+}
+
+.translate-action-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.translate-action-btn:hover {
+  background: #1d4ed8;
+}
+
+.translate-action-btn:disabled {
+  opacity: 0.6;
+}
+
+.translation-result {
+  margin-top: 18px;
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.translation-result-label {
+  color: #9ca3af;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.translation-result p {
+  margin: 0;
+  line-height: 1.5;
+}

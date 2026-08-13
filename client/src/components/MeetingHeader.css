@@ -1,0 +1,51 @@
+.meeting-header {
+  height: 78px;
+  background: #202735;
+  border-bottom: 1px solid #3a4353;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+}
+
+.meeting-logo {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.meeting-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.meeting-id {
+  color: white;
+  font-size: 15px;
+}
+
+.copy-button,
+.leave-button {
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 11px 17px;
+  cursor: pointer;
+}
+
+.copy-button {
+  background: #3a4353;
+}
+
+.copy-button:hover {
+  background: #4b5568;
+}
+
+.leave-button {
+  background: #dc2626;
+}
+
+.leave-button:hover {
+  background: #b91c1c;
+}

@@ -1,0 +1,65 @@
+.participants-panel {
+  position: fixed;
+  right: 24px;
+  top: 100px;
+  width: 320px;
+  background: #1f2937;
+  color: white;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  padding: 22px;
+  z-index: 100;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.participants-panel h3 {
+  margin: 0 0 20px;
+}
+
+.close-participants {
+  position: absolute;
+  right: 15px;
+  top: 12px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #293548;
+  border-radius: 10px;
+}
+
+.participant-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.participant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.participant-info span {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.no-participants {
+  margin-top: 18px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}

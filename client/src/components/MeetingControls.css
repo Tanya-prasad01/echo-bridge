@@ -1,0 +1,91 @@
+.meeting-controls {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+
+  width: 100% !important;
+  height: 90px !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 10px !important;
+
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+
+  background: #202735 !important;
+  border-top: 1px solid #374151 !important;
+
+  z-index: 9999 !important;
+}
+
+.meeting-controls .control-btn {
+  width: 82px !important;
+  min-width: 82px !important;
+  height: 62px !important;
+
+  background: #303a4b;
+  border: none;
+  border-radius: 10px;
+
+  color: white;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 5px;
+
+  cursor: pointer;
+  font-size: 12px;
+
+  flex-shrink: 0 !important;
+}
+
+.meeting-controls .control-btn:hover {
+  background: #3d485b;
+}
+
+.meeting-controls .control-btn.active {
+  background: #2563eb;
+}
+
+.meeting-controls .control-btn.off {
+  background: #7f1d1d;
+}
+
+.meeting-controls .control-icon {
+  font-size: 21px;
+}
+
+.meeting-controls .end-call {
+  width: 62px !important;
+  min-width: 62px !important;
+  height: 62px !important;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #dc2626;
+  color: white;
+
+  font-size: 23px;
+
+  cursor: pointer;
+
+  margin-left: 10px;
+
+  flex-shrink: 0 !important;
+}
+
+.meeting-controls .end-call:hover {
+  background: #b91c1c;
+}

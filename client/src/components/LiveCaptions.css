@@ -1,0 +1,25 @@
+.caption-box {
+  position: fixed;
+  bottom: 105px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 80%);
+  background: rgba(15, 23, 42, 0.94);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  z-index: 90;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.captions-title {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 7px;
+}
+
+.caption-text {
+  font-size: 18px;
+  line-height: 1.5;
+}
