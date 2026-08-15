@@ -2753,12 +2753,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import MeetingHeader from "../components/MeetingHeader";
 import MeetingControls from "../components/MeetingControls";
 import ParticipantsPanel from "../components/ParticipantsPanel";
 import LiveCaptions from "../components/LiveCaptions";
 import TranslationPanel from "../components/TranslationPanel";
+import VideoSection from "../components/VideoSection";
 
 const MeetingRoom = () => {
   const navigate = useNavigate();
@@ -2767,7 +2769,9 @@ const MeetingRoom = () => {
   // MEETING
   // =========================
 
-  const meetingId = "784 512 963";
+  // const meetingId = "784 512 963";
+
+  const { meetingId = "Unknown" } = useParams();
 
   const handleLeaveMeeting = () => {
     navigate("/");
@@ -2937,7 +2941,7 @@ const MeetingRoom = () => {
 
         {/* VIDEO */}
 
-        <div className="video-section">
+        {/* <div className="video-section">
 
           <div className="video-placeholder">
 
@@ -2955,7 +2959,15 @@ const MeetingRoom = () => {
 
           </div>
 
-        </div>
+        </div> */}
+
+        {/* VIDEO */}
+
+        <VideoSection
+         videoRef={videoRef}
+         cameraOn={cameraOn}
+         isScreenSharing={isScreenSharing}
+        /> 
 
         {/* PARTICIPANTS */}
 

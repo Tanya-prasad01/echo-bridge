@@ -112,7 +112,7 @@ function AppContent() {
   const location = useLocation();
 
   // Meeting page par Navbar nahi dikhega
-  const isMeetingRoom = location.pathname === "/meeting";
+  const isMeetingRoom = location.pathname.startsWith("/meeting");
 
   return (
     <>
@@ -124,7 +124,9 @@ function AppContent() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/meeting" element={<MeetingRoom />} />
+        {/* <Route path="/meeting/ " element={<MeetingRoom />} /> */}
+        <Route path="/meeting/:meetingId" element={<MeetingRoom />}
+/>
       </Routes>
     </>
   );

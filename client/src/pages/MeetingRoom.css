@@ -810,19 +810,22 @@
 
 
 
-
-/* ================================
-   MEETING ROOM
-================================ */
+/* =========================
+   MAIN MEETING
+========================= */
 
 .meeting-room {
   width: 100%;
   height: 100vh;
+
   background: #0f172a;
-  color: white;
+  color: #fff;
+
   display: flex;
   flex-direction: column;
+
   overflow: hidden;
+  
   box-sizing: border-box;
 }
 
@@ -840,17 +843,15 @@
 
   padding: 0 32px;
 
-  background: #1e293b;
-  border-bottom: 1px solid #334155;
-
-  box-sizing: border-box;
+  background: #202735;
+  border-bottom: 1px solid #374151;
 }
 
 .meeting-logo {
-  color: white;
-  font-size: 25px;
+  color: #fff;
+  font-size: 26px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.6px;
 }
 
 .meeting-header-right {
@@ -860,46 +861,36 @@
 }
 
 .meeting-id {
-  color: #cbd5e1;
+  color: #d1d5db;
   font-size: 14px;
 }
 
 .meeting-id strong {
-  color: white;
+  color: #fff;
   margin-left: 5px;
 }
 
-.copy-button {
-  background: #334155;
-  color: white;
+.copy-button,
+.leave-button {
   border: none;
-  border-radius: 8px;
-
-  padding: 10px 16px;
-
+  color: white;
+  border-radius: 9px;
+  padding: 11px 17px;
   font-size: 14px;
   cursor: pointer;
-
   transition: 0.2s ease;
 }
 
+.copy-button {
+  background: #374151;
+}
+
 .copy-button:hover {
-  background: #475569;
+  background: #4b5563;
 }
 
 .leave-button {
   background: #dc3b30;
-  color: white;
-
-  border: none;
-  border-radius: 8px;
-
-  padding: 10px 18px;
-
-  font-size: 14px;
-  cursor: pointer;
-
-  transition: 0.2s ease;
 }
 
 .leave-button:hover {
@@ -916,9 +907,11 @@
 
   position: relative;
 
-  display: flex;
+  padding: 24px;
 
-  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   box-sizing: border-box;
 
@@ -926,42 +919,48 @@
 }
 
 /* ================================
-   VIDEO SECTION
+   VIDEO AREA
 ================================ */
 
-.video-section {
-  flex: 1;
-  min-width: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding-right: 20px;
-}
-
-.video-placeholder {
+/* .video-section {
   width: 100%;
   height: 100%;
 
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-right: 390px;
+  box-sizing: border-box;
+} */
+
+/* THIS FIXES YOUR VIDEO SIZE */
+
+.video-placeholder {
+  width: min(900px, 100%);
+  aspect-ratio: 16 / 9;
+
+  height: auto;
   max-height: calc(100vh - 190px);
 
-  background: #020617;
+  background: #050816;
 
-  border-radius: 16px;
-
+  border-radius: 18px;
   overflow: hidden;
+
+  position: relative;
+
+  border: 1px solid #273044;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35);
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  position: relative;
-
-  border: 1px solid #1e293b;
 }
 
-/* Actual camera video */
+/* CAMERA VIDEO */
 
 .camera-video {
   width: 100%;
@@ -970,9 +969,13 @@
   object-fit: cover;
 
   display: block;
+
+  background: #050816;
 }
 
-/* Camera OFF */
+/* ================================
+   CAMERA OFF
+================================ */
 
 .camera-off {
   width: 100%;
@@ -990,52 +993,53 @@
 }
 
 .camera-off-icon {
-  width: 80px;
-  height: 80px;
+  width: 76px;
+  height: 76px;
 
   border-radius: 50%;
 
-  background: #334155;
+  background: #303a4b;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 36px;
+  font-size: 34px;
 
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 .camera-off p {
-  color: #94a3b8;
-  font-size: 15px;
+  color: #9ca3af;
+  font-size: 14px;
 }
 
 /* ================================
-   PARTICIPANTS PANEL
+   PARTICIPANTS
 ================================ */
 
 .participants-panel {
   position: absolute;
 
-  top: 20px;
-  right: 20px;
+  top: 24px;
+  right: 24px;
 
   width: 320px;
 
-  background: #1e293b;
+  background: #222a38;
 
-  border: 1px solid #334155;
+  border: 1px solid #374151;
 
   border-radius: 16px;
 
-  padding: 20px;
+  padding: 18px;
 
   box-sizing: border-box;
 
   z-index: 50;
 
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.35);
 }
 
 .participants-header {
@@ -1061,7 +1065,7 @@
 
   background: transparent;
 
-  color: #cbd5e1;
+  color: #d1d5db;
 
   font-size: 22px;
 
@@ -1069,7 +1073,7 @@
 }
 
 .close-participants:hover {
-  background: #334155;
+  background: #374151;
   color: white;
 }
 
@@ -1081,7 +1085,7 @@
 
   padding: 14px;
 
-  background: #334155;
+  background: #303a4b;
 
   border-radius: 12px;
 }
@@ -1092,7 +1096,7 @@
 
   border-radius: 50%;
 
-  background: #475569;
+  background: #3d4658;
 
   display: flex;
   align-items: center;
@@ -1113,8 +1117,7 @@
 }
 
 .participant-info span {
-  color: #94a3b8;
-
+  color: #9ca3af;
   font-size: 12px;
 }
 
@@ -1123,50 +1126,51 @@
 
   margin: 18px 0 4px;
 
-  color: #94a3b8;
+  color: #9ca3af;
 
   font-size: 13px;
 }
 
 /* ================================
-   LIVE CAPTIONS
+   CAPTIONS
 ================================ */
 
 .captions-box {
   position: fixed;
 
   left: 50%;
-  bottom: 115px;
+  bottom: 118px;
 
   transform: translateX(-50%);
 
-  width: min(650px, 60%);
+  width: min(600px, 45%);
 
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(15, 23, 342, 0.96);
 
   border: 1px solid #334155;
 
   border-radius: 14px;
 
-  padding: 14px 20px;
+  padding: 12px 18px;
 
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 
   text-align: center;
 
   z-index: 30;
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .captions-label {
-  color: #cbd5e1;
+  color: #aeb7c7;
 
   font-size: 13px;
 
   font-weight: 600;
 
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .caption-text {
@@ -1201,33 +1205,31 @@
 
   padding: 8px 14px;
 
-  background: rgba(30, 41, 59, 0.98);
+  background: rgba(32, 39, 53, 0.98);
 
-  border: 1px solid #334155;
+  border: 1px solid #374151;
 
   border-radius: 16px;
 
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.4);
 
   z-index: 100;
 
   box-sizing: border-box;
 }
 
-/* ================================
-   CONTROL BUTTONS
-================================ */
-
 .control-btn {
   width: 82px;
   height: 62px;
 
-  background: #334155;
+  background: #303a4b;
 
   color: white;
 
   border: none;
-  border-radius: 10px;
+
+  border-radius: 11px;
 
   cursor: pointer;
 
@@ -1237,7 +1239,7 @@
   align-items: center;
   justify-content: center;
 
-  gap: 5px;
+  gap: 6px;
 
   font-size: 12px;
 
@@ -1247,7 +1249,7 @@
 }
 
 .control-btn:hover {
-  background: #475569;
+  background: #3d485b;
 
   transform: translateY(-2px);
 }
@@ -1257,11 +1259,11 @@
 }
 
 .control-btn.active {
-  background: #3b6ff5;
+  background: #4169e1;
 }
 
 .control-btn.active:hover {
-  background: #315fd9;
+  background: #365bc7;
 }
 
 .control-btn.off {
@@ -1277,9 +1279,7 @@
   line-height: 1;
 }
 
-/* ================================
-   END CALL
-================================ */
+/* END CALL */
 
 .meeting-controls .end-call {
   width: 62px;
@@ -1290,6 +1290,7 @@
   margin-left: 8px;
 
   border: none;
+
   border-radius: 50%;
 
   background: #dc3b30;
@@ -1323,57 +1324,49 @@
    RESPONSIVE
 ================================ */
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
+
+  .video-section {
+    width: calc(100% - 350px);
+  }
+
+  .participants-panel {
+    width: 310px;
+  }
+
+  .control-btn {
+    width: 76px;
+  }
+}
+
+@media (max-width: 900px) {
+
   .meeting-header {
-    padding: 0 22px;
+    padding: 0 20px;
   }
 
   .meeting-id {
     display: none;
   }
 
-  .participants-panel {
-    width: 290px;
-  }
-
-  .control-btn {
-    width: 74px;
-  }
-}
-
-@media (max-width: 800px) {
-  .meeting-header {
-    height: 65px;
-    padding: 0 16px;
-  }
-
-  .meeting-logo {
-    font-size: 21px;
-  }
-
-  .meeting-header-right {
-    gap: 8px;
-  }
-
-  .copy-button,
-  .leave-button {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-
   .meeting-main {
-    padding: 12px;
+    padding: 16px;
   }
 
   .video-section {
+    width: 100%;
     padding-right: 0;
   }
 
-  .participants-panel {
-    top: 12px;
-    right: 12px;
+  .video-placeholder {
+    max-width: 900px;
+  }
 
-    width: 280px;
+  .participants-panel {
+    top: 16px;
+    right: 16px;
+
+    width: 300px;
   }
 
   .meeting-controls {
@@ -1388,31 +1381,55 @@
 
   .control-btn {
     flex-shrink: 0;
-
-    width: 70px;
-    height: 58px;
-  }
-
-  .meeting-controls .end-call {
-    flex-shrink: 0;
-  }
-
-  .captions-box {
-    bottom: 100px;
-
-    width: 80%;
   }
 }
 
 @media (max-width: 600px) {
+
+  .meeting-header {
+    height: 64px;
+
+    padding: 0 14px;
+  }
+
+  .meeting-logo {
+    font-size: 21px;
+  }
+
+  .copy-button,
+  .leave-button {
+    padding: 8px 11px;
+    font-size: 12px;
+  }
+
+  .meeting-main {
+    padding: 10px;
+  }
+
+  .video-placeholder {
+    border-radius: 12px;
+  }
+
+  .participants-panel {
+    width: calc(100vw - 20px);
+
+    right: 10px;
+    top: 10px;
+  }
+
   .meeting-controls {
     gap: 6px;
+
     padding: 7px;
+
+    height: 70px;
+
+    border-radius: 13px;
   }
 
   .control-btn {
-    width: 62px;
-    height: 54px;
+    width: 65px;
+    height: 55px;
   }
 
   .control-icon {
@@ -1424,15 +1441,37 @@
   }
 
   .meeting-controls .end-call {
-    width: 54px;
-    height: 54px;
-    min-width: 54px;
-
-    margin-left: 3px;
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
   }
 
-  .participants-panel {
-    width: calc(100vw - 24px);
-    right: 12px;
+  .captions-box {
+    bottom: 95px;
+
+    width: 90%;
   }
+}
+
+.translation-panel {
+  position: absolute;
+
+  right: 24px;
+  bottom: 115px;
+
+  width: 320px;
+
+  background: #222a38;
+
+  border: 1px solid #374151;
+  border-radius: 16px;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+
+  z-index: 50;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.35);
 }
